@@ -13,6 +13,3 @@ threshold_value = threshold_otsu(gray_car_image)
 binary_car_image = gray_car_image > threshold_value
 ax2.imshow(binary_car_image, cmap="gray")
 plt.show()
-print('hello')
-print('hello')
-print('hello')
