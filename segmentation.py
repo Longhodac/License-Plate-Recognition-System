@@ -7,9 +7,6 @@ import matplotlib.patches as patches
 import matplotlib.pyplot as plt
 import cca2
 
-# headlamps are categorized as licenses plate because their shape are similar
-# gonna use plate_like_objects[2] for now btu will fix later
-
 # invert to convert black pixel to white pixel and vice versa
 license_plate = np.invert(cca2.plate_like_objects[2])
 

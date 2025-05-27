@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>License Plate Recognition System - Flask</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚗 License Plate Recognition System</h1>
+            <p>Upload an image to detect and recognize license plates using computer vision</p>
+            <div class="tech-badge">Powered by Flask + OpenCV + scikit-image</div>
+        </div>
+
+        <div class="upload-section" id="uploadSection">
+            <h3>📸 Upload or Drop an Image</h3>
+            <p>Supported formats: JPG, PNG, GIF</p>
+            <form id="uploadForm" enctype="multipart/form-data">
+                <input type="file" id="fileInput" name="file" class="file-input" accept="image/*">
+                <button type="button" class="upload-btn" onclick="document.getElementById('fileInput').click()">
+                    Choose Image
+                </button>
+            </form>
+            <div class="demo-images">
+                <p>Or try these demo images:</p>
+                <button class="demo-btn" onclick="loadDemoImage('car1')">Demo Car 1</button>
+                <button class="demo-btn" onclick="loadDemoImage('car2')">Demo Car 2</button>
+                <button class="demo-btn" onclick="loadDemoImage('car3')">Demo Car 3</button>
+            </div>
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Processing image on server... Please wait</p>
+        </div>
+
+        <div class="error-message" id="errorMessage" style="display: none;">
+            <h4>Error</h4>
+            <p id="errorText"></p>
+        </div>
+
+        <div class="processing-steps" id="steps" style="display: none;">
+            <div class="step-card">
+                <div class="step-header">Step 1: Original Image</div>
+                <div class="step-content">
+                    <div class="canvas-container">
+                        <img id="originalImage" class="step-image" alt="Original Image">
+                    </div>
+                    <p>Original uploaded image processed by Flask backend</p>
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-header">Step 2: Binary Threshold (Otsu)</div>
+                <div class="step-content">
+                    <div class="canvas-container">
+                        <img id="binaryImage" class="step-image" alt="Binary Image">
+                    </div>
+                    <p>Image converted to binary using Otsu's threshold algorithm</p>
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-header">Step 3: License Plate Detection</div>
+                <div class="step-content">
+                    <div class="canvas-container">
+                        <img id="detectionImage" class="step-image" alt="Detection Results">
+                    </div>
+                    <p>Connected component analysis to detect license plate regions</p>
+                    <div class="stats">
+                        <span id="platesFound">0</span> license plate(s) detected
+                    </div>
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-header">Step 4: Character Segmentation</div>
+                <div class="step-content">
+                    <div class="canvas-container">
+                        <img id="segmentationImage" class="step-image" alt="Character Segmentation">
+                    </div>
+                    <p>Individual characters detected and segmented using regionprops</p>
+                    <div class="stats">
+                        <span id="charactersFound">0</span> character(s) segmented
+                    </div>
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-header">Step 5: Extracted Characters</div>
+                <div class="step-content">
+                    <div class="characters-grid" id="charactersGrid">
+                        <!-- Characters will be populated here -->
+                    </div>
+                    <p>Characters extracted and normalized to 20x20 pixels for SVM recognition</p>
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-header">Step 6: Final Result</div>
+                <div class="step-content">
+                    <div class="result-text" id="resultText">
+                        Upload an image to see results
+                    </div>
+                    <p>License plate recognized using trained SVM model</p>
+                    <div class="processing-info">
+                        <small>Processing powered by Flask backend with scikit-image and OpenCV</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="api-info" id="apiInfo" style="display: none;">
+            <h3>🔧 API Information</h3>
+            <div class="api-endpoint">
+                <strong>Upload Endpoint:</strong> POST /upload
+            </div>
+            <div class="api-endpoint">
+                <strong>Demo Endpoint:</strong> GET /demo/&lt;demo_type&gt;
+            </div>
+            <div class="api-response">
+                <strong>Response Format:</strong>
+                <pre id="apiResponse"></pre>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
