@@ -310,4 +310,8 @@ body {
 
 .api-response pre {
     background: #2d3748;
-    color: #
+    color: #f7fafc;
+    padding: 15px;
+    border-radius: 8px;
+    overflow-x: auto;
+}

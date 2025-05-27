@@ -30,7 +30,7 @@ pip install -r requirements.txt
 
 For command line interface:
 ```bash
-python main.py --image path/to/image.jpg
+python prediction.py 
 ```
 
 For web interface:
@@ -68,7 +68,7 @@ License-Plate-Recognition-System/
 🚧 **Work in Progress** 🚧
 
 Currently implementing:
-- Web interface with Flask and real-time processing
+- Web interface with Flask and real-time processing (currently doesn't work)
 - Character segmentation improvements using scikit-image
 - SVM model training pipeline for better accuracy
 - Additional image preprocessing features
